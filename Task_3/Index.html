@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savory Delights - Restaurant Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid #dee2e6;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .category-btn:hover {
+            background: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255,107,107,0.3);
+        }
+
+        .category-btn.active {
+            background: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+        }
+
+        .search-bar {
+            padding: 20px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border: 2px solid #dee2e6;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255,107,107,0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            font-size: 18px;
+        }
+
+        .menu-content {
+            padding: 40px;
+        }
+
+        .category-section {
+            margin-bottom: 50px;
+        }
+
+        .category-title {
+            font-size: 2em;
+            color: #343a40;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .category-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #ff6b6b;
+            border-radius: 2px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #f1f3f4;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: #2d3436;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .item-content {
+            padding: 20px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 5px;
+        }
+
+        .item-price {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #00b894;
+            background: #00b89420;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .item-description {
+            color: #636e72;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stars {
+            color: #fdcb6e;
+            font-size: 1.1em;
+        }
+
+        .rating-text {
+            color: #636e72;
+            font-size: 0.9em;
+        }
+
+        .add-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .add-btn:hover {
+            background: #ee5a24;
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .no-results {
+            text-align: center;
+            color: #636e72;
+            font-size: 1.2em;
+            margin: 50px 0;
+        }
+
+        .cart-info {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #00b894;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cart-info:hover {
+            background: #00a085;
+            transform: scale(1.05);
+        }
+
+        .cart-count {
+            background: white;
+            color: #00b894;
+            padding: 2px 8px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .categories {
+                overflow-x: auto;
+                justify-content: flex-start;
+            }
+            
+            .category-btn {
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍽️ Savory Delights</h1>
+            <p>Crafting culinary experiences since 1995</p>
+        </div>
+
+        <div class="categories">
+            <button class="category-btn active" data-category="all">All Items</button>
+            <button class="category-btn" data-category="appetizers">🥗 Appetizers</button>
+            <button class="category-btn" data-category="mains">🍖 Main Course</button>
+            <button class="category-btn" data-category="desserts">🍰 Desserts</button>
+            <button class="category-btn" data-category="beverages">🥤 Beverages</button>
+        </div>
+
+        <div class="search-bar">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search for dishes..." id="searchInput">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+
+        <div class="menu-content">
+            <div class="category-section" data-category="appetizers">
+                <h2 class="category-title">Appetizers</h2>
+                <div class="menu-grid">
+                    <div class="menu-item" data-name="Caesar Salad">
+                        <div class="item-image">🥗</div>
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-name">Caesar Salad</div>
+                                <div class="item-price">$12.99</div>
+                            </div>
+                            <div class="item-description">Fresh romaine lettuce, parmesan cheese, croutons, and our signature Caesar dressing</div>
+                            <div class="item-footer">
+                                <div class="rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span class="rating-text">(4.8)</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('Caesar Salad', 12.99)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-name="Garlic Bread">
+                        <div class="item-image">🍞</div>
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-name">Garlic Bread</div>
+                                <div class="item-price">$8.99</div>
+                            </div>
+                            <div class="item-description">Crispy bread with garlic butter, herbs, and melted mozzarella cheese</div>
+                            <div class="item-footer">
+                                <div class="rating">
+                                    <span class="stars">★★★★☆</span>
+                                    <span class="rating-text">(4.5)</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('Garlic Bread', 8.99)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-name="Buffalo Wings">
+                        <div class="item-image">🍗</div>
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-name">Buffalo Wings</div>
+                                <div class="item-price">$15.99</div>
+                            </div>
+                            <div class="item-description">Spicy buffalo chicken wings served with celery sticks and blue cheese dip</div>
+                            <div class="item-footer">
+                                <div class="rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span class="rating-text">(4.9)</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('Buffalo Wings', 15.99)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-section" data-category="mains">
+                <h2 class="category-title">Main Course</h2>
+                <div class="menu-grid">
+                    <div class="menu-item" data-name="Grilled Salmon">
+                        <div class="item-image">🐟</div>
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-name">Grilled Salmon</div>
+                                <div class="item-price">$24.99</div>
+                            </div>
+                            <div class="item-description">Fresh Atlantic salmon with lemon herb sauce, roasted vegetables, and wild rice</div>
+                            <div class="item-footer">
+                                <div class="rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span class="rating-text">(4.7)</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('Grilled Salmon', 24.99)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-name="Beef Steak">
+                        <div class="item-image">🥩</div>
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-name">Beef Steak</div>
+                                <div class="item-price">$28.99</div>
+                            </div>
+                            <div class="item-description">Premium ribeye steak grilled to perfection with garlic mashed potatoes</div>
+                            <div class="item-footer">
+                                <div class="rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span class="rating-text">(4.9)</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('Beef Steak', 28.99)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-name="Chicken Parmesan">
+                        <div class="item-image">🍗</div>
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-name">Chicken Parmesan</div>
+                                <div class="item-price">$19.99</div>
+                            </div>
+                            <div class="item-description">Crispy breaded chicken breast topped with marinara sauce and melted cheese</div>
+                            <div class="item-footer">
+                                <div class="rating">
+                                    <span class="stars">★★★★☆</span>
+                                    <span class="rating-text">(4.6)</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('Chicken Parmesan', 19.99)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-name="Vegetarian Pasta">
+                        <div class="item-image">🍝</div>
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-name">Vegetarian Pasta</div>
+                                <div class="item-price">$16.99</div>
+                            </div>
+                            <div class="item-description">Penne pasta with seasonal vegetables, olive oil, and fresh herbs</div>
+                            <div class="item-footer">
+                                <div class="rating">
+                                    <span class="stars">★★★★☆</span>
+                                    <span class="rating-text">(4.4)</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('Vegetarian Pasta', 16.99)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-section" data-category="desserts">
+                <h2 class="category-title">Desserts</h2>
+                <div class="menu-grid">
+                    <div class="menu-item" data-name="Chocolate Cake">
+                        <div class="item-image">🍰</div>
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-name">Chocolate Cake</div>
+                                <div class="item-price">$9.99</div>
+                            </div>
+                            <div class="item-description">Rich chocolate cake with layers of chocolate ganache and fresh berries</div>
+                            <div class="item-footer">
+                                <div class="rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span class="rating-text">(4.8)</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('Chocolate Cake', 9.99)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-name="Ice Cream Sundae">
+                        <div class="item-image">🍨</div>
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-name">Ice Cream Sundae</div>
+                                <div class="item-price">$7.99</div>
+                            </div>
+                            <div class="item-description">Vanilla ice cream with hot fudge, whipped cream, and a cherry on top</div>
+                            <div class="item-footer">
+                                <div class="rating">
+                                    <span class="stars">★★★★☆</span>
+                                    <span class="rating-text">(4.5)</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('Ice Cream Sundae', 7.99)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-name="Tiramisu">
+                        <div class="item-image">🍮</div>
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-name">Tiramisu</div>
+                                <div class="item-price">$11.99</div>
+                            </div>
+                            <div class="item-description">Classic Italian dessert with coffee-soaked ladyfingers and mascarpone cream</div>
+                            <div class="item-footer">
+                                <div class="rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span class="rating-text">(4.9)</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('Tiramisu', 11.99)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-section" data-category="beverages">
+                <h2 class="category-title">Beverages</h2>
+                <div class="menu-grid">
+                    <div class="menu-item" data-name="Fresh Juice">
+                        <div class="item-image">🥤</div>
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-name">Fresh Juice</div>
+                                <div class="item-price">$4.99</div>
+                            </div>
+                            <div class="item-description">Freshly squeezed orange, apple, or cranberry juice</div>
+                            <div class="item-footer">
+                                <div class="rating">
+                                    <span class="stars">★★★★☆</span>
+                                    <span class="rating-text">(4.3)</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('Fresh Juice', 4.99)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-name="Coffee">
+                        <div class="item-image">☕</div>
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-name">Coffee</div>
+                                <div class="item-price">$3.99</div>
+                            </div>
+                            <div class="item-description">Premium blend coffee, available hot or iced</div>
+                            <div class="item-footer">
+                                <div class="rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span class="rating-text">(4.7)</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('Coffee', 3.99)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-item" data-name="Wine">
+                        <div class="item-image">🍷</div>
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-name">Wine</div>
+                                <div class="item-price">$12.99</div>
+                            </div>
+                            <div class="item-description">Selection of red and white wines from premium vineyards</div>
+                            <div class="item-footer">
+                                <div class="rating">
+                                    <span class="stars">★★★★☆</span>
+                                    <span class="rating-text">(4.6)</span>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('Wine', 12.99)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="no-results hidden">
+                <p>No dishes found matching your search. Try different keywords!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-info" onclick="showCart()">
+        🛒 Cart (<span class="cart-count">0</span>)
+    </div>
+
+    <script>
+        let cart = [];
+        let currentCategory = 'all';
+
+        // Category filtering
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const category = this.dataset.category;
+                currentCategory = category;
+                filterItems();
+            });
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function() {
+            filterItems();
+        });
+
+        function filterItems() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const sections = document.querySelectorAll('.category-section');
+            const menuItems = document.querySelectorAll('.menu-item');
+            let visibleItems = 0;
+
+            sections.forEach(section => {
+                const sectionCategory = section.dataset.category;
+                let sectionVisible = false;
+
+                if (currentCategory === 'all' || currentCategory === sectionCategory) {
+                    section.style.display = 'block';
+                    
+                    // Filter items within this section
+                    const items = section.querySelectorAll('.menu-item');
+                    items.forEach(item => {
+                        const itemName = item.dataset.name.toLowerCase();
+                        if (itemName.includes(searchTerm)) {
+                            item.style.display = 'block';
+                            visibleItems++;
+                            sectionVisible = true;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+
+                    // Hide section if no items are visible
+                    if (!sectionVisible) {
+                        section.style.display = 'none';
+                    }
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            // Show/hide no results message
+            const noResults = document.querySelector('.no-results');
+            if (visibleItems === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+
+        function addToCart(itemName, price) {
+            cart.push({ name: itemName, price: price });
+            updateCartDisplay();
+            
+            // Show success animation
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Added!';
+            btn.style.background = '#00b894';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '#ff6b6b';
+            }, 1000);
+        }
+
+        function updateCartDisplay() {
+            const cartCount = document.querySelector('.cart-count');
+            cartCount.textContent = cart.length;
+        }
+
+        function showCart() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            let cartContent = 'Your Cart:\n\n';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                cartContent += `${index + 1}. ${item.name} - $${item.price}\n`;
+                total += item.price;
+            });
+
+            cartContent += `\nTotal: $${total.toFixed(2)}`;
+            
+            const proceed = confirm(cartContent + '\n\nProceed to checkout?');
+            if (proceed) {
+                alert('Order placed successfully! Thank you for dining with us!');
+                cart = [];
+                updateCartDisplay();
+            }
+        }
+
+        // Initialize
+        filterItems();
+    </script>
+</body>
+</html>

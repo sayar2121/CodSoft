@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Email Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .email-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .email-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-50px, -50px) rotate(360deg); }
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tagline {
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .email-content {
+            padding: 40px 30px;
+        }
+
+        .greeting {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .main-content {
+            line-height: 1.6;
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .main-content p {
+            margin-bottom: 16px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .highlight-box h3 {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .stats-section {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .social-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: #f8f9fa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #667eea;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .email-footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .footer-content {
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #764ba2;
+        }
+
+        .unsubscribe {
+            font-size: 12px;
+            color: #999;
+            margin-top: 15px;
+        }
+
+        .unsubscribe a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .preview-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .preview-controls h4 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .preview-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .preview-btn {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .preview-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .template-selector {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .template-selector h4 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .template-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .template-btn {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .template-btn:hover {
+            background: #f8f9fa;
+        }
+
+        .template-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .email-container {
+                border-radius: 8px;
+            }
+
+            .email-header,
+            .email-content {
+                padding: 20px;
+            }
+
+            .greeting {
+                font-size: 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .preview-controls,
+            .template-selector {
+                position: static;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .preview-controls,
+            .template-selector {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="template-selector">
+        <h4>Email Templates</h4>
+        <div class="template-options">
+            <button class="template-btn active" onclick="switchTemplate('welcome')">Welcome Email</button>
+            <button class="template-btn" onclick="switchTemplate('newsletter')">Newsletter</button>
+            <button class="template-btn" onclick="switchTemplate('promotion')">Promotion</button>
+        </div>
+    </div>
+
+    <div class="preview-controls">
+        <h4>Preview Mode</h4>
+        <div class="preview-buttons">
+            <button class="preview-btn active" onclick="setPreview('desktop')">Desktop</button>
+            <button class="preview-btn" onclick="setPreview('mobile')">Mobile</button>
+        </div>
+    </div>
+
+    <div class="email-container" id="emailContainer">
+        <div class="email-header">
+            <div class="logo" id="emailLogo">TechCorp</div>
+            <div class="tagline" id="emailTagline">Innovation at Your Fingertips</div>
+        </div>
+
+        <div class="email-content">
+            <div class="greeting" id="emailGreeting">Hello John!</div>
+
+            <div class="main-content" id="emailMainContent">
+                <p>Welcome to TechCorp! We're thrilled to have you join our community of innovators and tech enthusiasts.</p>
+                <p>Your journey with us begins now, and we can't wait to show you what we've been working on. From cutting-edge solutions to personalized experiences, we're here to help you achieve your goals.</p>
+            </div>
+
+            <div class="highlight-box" id="emailHighlight">
+                <h3>🎉 Special Welcome Offer</h3>
+                <p>As a new member, you get exclusive access to our premium features for the first 30 days - completely free!</p>
+            </div>
+
+            <div class="cta-section">
+                <a href="#" class="cta-button" id="emailCTA">Get Started Now</a>
+            </div>
+
+            <div class="features-grid" id="emailFeatures">
+                <div class="feature-item">
+                    <div class="feature-icon">🚀</div>
+                    <div class="feature-title">Lightning Fast</div>
+                    <div class="feature-description">Experience blazing-fast performance with our optimized platform</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-title">Secure & Safe</div>
+                    <div class="feature-description">Your data is protected with enterprise-grade security</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <div class="feature-title">Mobile Ready</div>
+                    <div class="feature-description">Access your account anywhere, anytime on any device</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⭐</div>
+                    <div class="feature-title">Premium Support</div>
+                    <div class="feature-description">Get help from our expert team 24/7</div>
+                </div>
+            </div>
+
+            <div class="stats-section" id="emailStats">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-label">Happy Users</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Countries</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Support</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-section">
+                <h3>Stay Connected</h3>
+                <p>Follow us on social media for the latest updates and tips</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">📘</a>
+                    <a href="#" class="social-link">🐦</a>
+                    <a href="#" class="social-link">📸</a>
+                    <a href="#" class="social-link">💼</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="email-footer">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#">About Us</a>
+                    <a href="#">Support</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact</a>
+                </div>
+                <p style="margin: 15px 0; color: #666; font-size: 14px;">
+                    TechCorp Inc. | 123 Innovation Street, Tech City, TC 12345
+                </p>
+            </div>
+            <div class="unsubscribe">
+                <p>You received this email because you signed up for TechCorp updates.</p>
+                <p><a href="#">Unsubscribe</a> | <a href="#">Update Preferences</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setPreview(mode) {
+            const container = document.getElementById('emailContainer');
+            const buttons = document.querySelectorAll('.preview-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (mode === 'mobile') {
+                container.style.maxWidth = '375px';
+                container.style.fontSize = '14px';
+            } else {
+                container.style.maxWidth = '600px';
+                container.style.fontSize = '16px';
+            }
+        }
+
+        function switchTemplate(templateType) {
+            const buttons = document.querySelectorAll('.template-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const templates = {
+                welcome: {
+                    logo: 'TechCorp',
+                    tagline: 'Innovation at Your Fingertips',
+                    greeting: 'Hello John!',
+                    mainContent: `
+                        <p>Welcome to TechCorp! We're thrilled to have you join our community of innovators and tech enthusiasts.</p>
+                        <p>Your journey with us begins now, and we can't wait to show you what we've been working on. From cutting-edge solutions to personalized experiences, we're here to help you achieve your goals.</p>
+                    `,
+                    highlight: `
+                        <h3>🎉 Special Welcome Offer</h3>
+                        <p>As a new member, you get exclusive access to our premium features for the first 30 days - completely free!</p>
+                    `,
+                    cta: 'Get Started Now'
+                },
+                newsletter: {
+                    logo: 'TechNews',
+                    tagline: 'Your Weekly Tech Digest',
+                    greeting: 'This Week in Tech',
+                    mainContent: `
+                        <p>Welcome to another exciting week in technology! We've curated the most important news and updates just for you.</p>
+                        <p>From breakthrough innovations to industry insights, stay ahead of the curve with our comprehensive coverage.</p>
+                    `,
+                    highlight: `
+                        <h3>📰 Featured Article</h3>
+                        <p>AI Revolution: How Machine Learning is Transforming Industries - Read our exclusive in-depth analysis.</p>
+                    `,
+                    cta: 'Read Full Newsletter'
+                },
+                promotion: {
+                    logo: 'ShopSmart',
+                    tagline: 'Deals That Matter',
+                    greeting: 'Limited Time Offer!',
+                    mainContent: `
+                        <p>Don't miss out on our biggest sale of the year! Save up to 70% on selected items across all categories.</p>
+                        <p>From electronics to fashion, home goods to fitness equipment - everything you need at unbeatable prices.</p>
+                    `,
+                    highlight: `
+                        <h3>🔥 Flash Sale</h3>
+                        <p>Extra 20% off when you spend $100 or more. Use code SAVE20 at checkout. Valid for 24 hours only!</p>
+                    `,
+                    cta: 'Shop Now'
+                }
+            };
+
+            const template = templates[templateType];
+            if (template) {
+                document.getElementById('emailLogo').textContent = template.logo;
+                document.getElementById('emailTagline').textContent = template.tagline;
+                document.getElementById('emailGreeting').textContent = template.greeting;
+                document.getElementById('emailMainContent').innerHTML = template.mainContent;
+                document.getElementById('emailHighlight').innerHTML = template.highlight;
+                document.getElementById('emailCTA').textContent = template.cta;
+            }
+        }
+
+        // Add some interactive elements
+        document.querySelectorAll('.feature-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Animate stats on scroll
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const text = target.textContent;
+                        const number = parseInt(text.replace(/[^0-9]/g, ''));
+                        
+                        if (number > 0) {
+                            let current = 0;
+                            const increment = number / 50;
+                            const timer = setInterval(() => {
+                                current += increment;
+                                if (current >= number) {
+                                    target.textContent = text;
+                                    clearInterval(timer);
+                                } else {
+                                    target.textContent = Math.floor(current) + text.replace(/[0-9]/g, '');
+                                }
+                            }, 40);
+                        }
+                    }
+                });
+            });
+            
+            stats.forEach(stat => observer.observe(stat));
+        }
+
+        // Initialize animations
+        animateStats();
+    </script>
+</body>
+</html>
